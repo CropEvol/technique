@@ -10,13 +10,13 @@
 
 ```ダメな例
 for(i=0;i<Ni;i++){
-	実行文A; /* Ni回 */
-		for(j=0;j<Nj;j++){
-			実行文B; /* Ni*Nj回 */
-				for(k=0;k<Nk;k++){
-					実行文C; /* Ni*Nj*Nk回 */
-				}
-		}
+  実行文A; /* Ni回 */
+    for(j=0;j<Nj;j++){
+      実行文B; /* Ni*Nj回 */
+        for(k=0;k<Nk;k++){
+          実行文C; /* Ni*Nj*Nk回 */
+        }
+    }
 }
 ```
 
@@ -56,7 +56,7 @@ s=t+a; y=x+s; u=t+a; z=w+u;の場合, uは明らかに必要ない
 ```
 tmp=0;
 for(i=0;i<100;i++){
-	tmp=tmp+a[i]*b[i];
+  tmp=tmp+a[i]*b[i];
 }
 ```
 
@@ -65,10 +65,10 @@ for(i=0;i<100;i++){
 ```
 tmp0=0; tmp1=0; tmp2=0; tmp3=0;
 for(i=0;i<100;i=i+4){
-	tmp0=tmp0+a[i]*b[i];
-	tmp1=tmp1+a[i+1]*b[i+1];
-	tmp2=tmp2+a[i+2]*b[i+2];
-	tmp3=tmp3+a[i+3]*b[i+3];
+  tmp0=tmp0+a[i]*b[i];
+  tmp1=tmp1+a[i+1]*b[i+1];
+  tmp2=tmp2+a[i+2]*b[i+2];
+  tmp3=tmp3+a[i+3]*b[i+3];
 }
 tmp=tmp0+tmp1+tmp2+tmp3;
 ```
@@ -88,8 +88,8 @@ for(i=0;i<100;i++){ 実行文E; }
 
 ```
 for(i=0;i<100;i++){
-	実行文D;
-	実行文E;
+  実行文D;
+  実行文E;
 }
 ```
 
@@ -100,16 +100,16 @@ out of order実行では, 広い範囲から実行可能命令を探せるよう
 ```
 1重化
 for(i=0;i<100;i++)
-	for(j=0;j<300;j++){
-		実行文D;
-	}
+  for(j=0;j<300;j++){
+    実行文D;
+  }
 ```
 
 ```
 for(k=0;k<30000;k++){
-	i=k / 300;
-	j=k % 300;
-	実行文D;
+  i=k / 300;
+  j=k % 300;
+  実行文D;
 }
 ```
 
@@ -122,21 +122,21 @@ OpenMPのため
 
 ```
 for(i=0;i<N;i++){
-	for(j=0;j<N;k++){
-		A[j][i]=B[i][j];
-	}
+  for(j=0;j<N;k++){
+    A[j][i]=B[i][j];
+  }
 }
 ```
 
 ```
 for(ii=0;ii<N;ii=ii+M){
-	for(jj=0;jj<N;jj=jj+M){
-		for(i=ii;ii<min(ii+M,N);i++){
-			for(j=jj;j<min(jj+M,N);j++){
-				A[j][i]=B[i][j];
-			}
-		}
-	}
+  for(jj=0;jj<N;jj=jj+M){
+    for(i=ii;ii<min(ii+M,N);i++){
+      for(j=jj;j<min(jj+M,N);j++){
+        A[j][i]=B[i][j];
+      }
+    }
+  }
 }
 ```
 
@@ -145,8 +145,8 @@ for(ii=0;ii<N;ii=ii+M){
 
 ```
 for(i=0;i<100;i++){
-	t[i]=a[i]+b[i];
-	s[i]=(2*t[i]+3)*t[i]+4;
+  t[i]=a[i]+b[i];
+  s[i]=(2*t[i]+3)*t[i]+4;
 }
 ```
 t[i]のデータが今後参照されることがないならば, t[i]の代わりに, tmpという変数に変更する, 配列の場合には, メモリに計算結果を格納するためのストアが行われる可能性があるが, 変数tmpの場合には, ループの途中では, キャッシュに格納されるのみである
